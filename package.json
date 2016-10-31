@@ -1,0 +1,26 @@
+{
+  "name": "templit-example",
+  "version": "1.0.0",
+  "description": "example templit project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/josephquested/templit-example.git"
+  },
+  "keywords": [
+    "templit",
+    "server",
+    "rendering",
+    "example",
+    "project"
+  ],
+  "author": "josephquested",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josephquested/templit-example/issues"
+  },
+  "homepage": "https://github.com/josephquested/templit-example#readme"
+}
