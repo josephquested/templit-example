@@ -4,7 +4,7 @@ module.exports = (html) => {
     <html>
       <head>
         <title> templit - home </title>
-        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="../index.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
       </head>
       <body>

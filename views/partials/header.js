@@ -1,9 +1,8 @@
 module.exports = (data) => {
   var html =
   `
-    <h1>${data.title}</h1>
-    <a href="/">home</a>
-    <hr>
+    <h1>TEMPLIT</h1>
+    <h2>- ${data.page} -</h2>
   `
   return html
 }
