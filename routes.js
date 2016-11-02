@@ -8,7 +8,9 @@ module.exports = {
     robotCreate: getRobotCreate
   },
   post: {
-    robots: postRobots
+    robots: postRobots,
+    robotDelete: postRobotDelete,
+    robotSeed: postRobotSeed
   }
 }
 
@@ -28,12 +30,10 @@ function getRobots (req, res) {
 }
 
 function getRobotProfile (req, res) {
-  console.log('GET ROBOT PROFILE REQ: ', req.url)
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
 
     data = JSON.parse(data)
     var robotData = data.robots.find((robot) => {
-      if (robot.id == req.params.id) console.log("found a match!", robot)
       return robot.id == req.params.id
     })
 
@@ -52,12 +52,39 @@ function getRobotCreate (req, res) {
 function postRobots (req, res) {
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
     data = JSON.parse(data)
+
     req.body.id = data.robots[data.robots.length - 1].id + 1
     data.robots.push(req.body)
 
     fs.writeFile(`${__dirname}/data.JSON`, JSON.stringify(data), (err, response) => {
       data.page = 'ROBOTS'
       res.render('robots', data)
+    })
+  })
+}
+
+function postRobotDelete (req, res) {
+  fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
+    data = JSON.parse(data)
+
+    var robotData = data.robots.find((robot) => {
+      return robot.id == req.params.id
+    })
+
+    var index = data.robots.indexOf(robotData)
+    data.robots.splice(index, 1)
+
+    fs.writeFile(`${__dirname}/data.JSON`, JSON.stringify(data), (err, response) => {
+      data.page = 'ROBOTS'
+      res.redirect('/robots')
+    })
+  })
+}
+
+function postRobotSeed (req, res) {
+  fs.readFile(`${__dirname}/seed.JSON`, 'utf8', (err, data) => {
+    fs.writeFile(`${__dirname}/data.JSON`, data, (err, response) => {
+      res.redirect('/robots')
     })
   })
 }

@@ -4,6 +4,7 @@ var templit = require('templit')
 var routes = require('./routes')
 
 var app = express()
+var PORT = process.env.PORT || 3000
 
 app.engine('js', templit)
 app.set('view engine', 'js')
@@ -20,7 +21,9 @@ app.get('/robots/:id', routes.get.robotProfile)
 
 // POST ROUTES //
 app.post('/robots', routes.post.robots)
+app.post('/robots/delete/:id', routes.post.robotDelete)
+app.post('/robots/seed', routes.post.robotSeed)
 
-app.listen(3000, () => {
-  console.log('templit rendering on port 3000')
+app.listen(PORT, () => {
+  console.log(`templit rendering on port ${PORT}`)
 })

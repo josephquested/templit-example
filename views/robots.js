@@ -6,9 +6,17 @@ module.exports = (data) => {
   `
     ${header}
     ${menuBar}
-    ${renderRobots(data.robots)}
+    ${render(data.robots)}
   `
   return html
+}
+
+function render (robots) {
+  if (robots.length > 0) {
+    return renderRobots(robots)
+  } else {
+    return renderSeed()
+  }
 }
 
 function renderRobots (robots) {
@@ -26,5 +34,18 @@ function renderRobots (robots) {
       <br>
     `
   })
+
+  return html
+}
+
+function renderSeed () {
+  html =
+  `
+    <br><h2>No robots in the database! Do you want to generate more?</h2><br>
+    <form action="/robots/seed" method="post">
+      <input type="submit" value="generate!">
+    </form>
+  `
+
   return html
 }
