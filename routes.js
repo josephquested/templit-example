@@ -29,9 +29,16 @@ function getRobots (req, res) {
 
 function getRobotProfile (req, res) {
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
-    data = JSON.parse(data).robots[req.params.id]
-    data.page = 'ROBOT PROFILE'
-    res.render('robot-profile', data)
+    data = JSON.parse(data)
+    var robotData = {}
+
+    data.robots.forEach((robot) => {
+      if (robot.id === req.params.id)
+        robotData = robot
+    })
+
+    robotData.page = 'ROBOT PROFILE'
+    res.render('robot-profile', robotData)
   })
 }
 
@@ -45,7 +52,7 @@ function getRobotCreate (req, res) {
 function postRobots (req, res) {
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
     data = JSON.parse(data)
-    req.body.id = data.robots.length
+    req.body.id = data.robots[data.robots.length - 1].id + 1
     data.robots.push(req.body)
 
     fs.writeFile(`${__dirname}/data.JSON`, JSON.stringify(data), (err, response) => {
