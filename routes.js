@@ -23,6 +23,8 @@ function getHome (req, res) {
 
 function getRobots (req, res) {
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
+    if (err) return console.log(`ERROR READING JSON: ${data}`)
+
     data = JSON.parse(data)
     data.page = 'ROBOTS'
     res.render('robots', data)
@@ -30,12 +32,16 @@ function getRobots (req, res) {
 }
 
 function getRobotProfile (req, res) {
+  console.log('req url:', req.url);
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
+    if (err) return console.log(`ERROR READING JSON: ${data}`)
+    var robotData = {}
 
     data = JSON.parse(data)
-    var robotData = data.robots.find((robot) => {
+    robotData = data.robots.find((robot) => {
       return robot.id == req.params.id
     })
+
 
     robotData.page = 'ROBOT PROFILE'
     res.render('robot-profile', robotData)
@@ -51,6 +57,7 @@ function getRobotCreate (req, res) {
 
 function postRobots (req, res) {
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
+    if (err) return console.log(`ERROR READING JSON: ${data}`)
     data = JSON.parse(data)
 
     req.body.id = data.robots[data.robots.length - 1].id + 1
@@ -65,6 +72,7 @@ function postRobots (req, res) {
 
 function postRobotDelete (req, res) {
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
+    if (err) return console.log(`ERROR READING JSON: ${data}`)
     data = JSON.parse(data)
 
     var robotData = data.robots.find((robot) => {
@@ -83,6 +91,7 @@ function postRobotDelete (req, res) {
 
 function postRobotSeed (req, res) {
   fs.readFile(`${__dirname}/seed.JSON`, 'utf8', (err, data) => {
+    if (err) return console.log(`ERROR READING JSON: ${data}`)
     fs.writeFile(`${__dirname}/data.JSON`, data, (err, response) => {
       res.redirect('/robots')
     })

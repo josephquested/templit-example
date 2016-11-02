@@ -27,6 +27,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "templit": "^1.0.1"
+    "templit": "^1.0.1",
+    "valid-url": "^1.0.9"
   }
 }
