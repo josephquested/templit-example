@@ -22,7 +22,7 @@ function getHome (req, res) {
 }
 
 function getRobots (req, res) {
-  fs.readFile(`${__dirname}/public/data.JSON`, 'utf8', (err, data) => {
+  fs.readFile(`./public/data.JSON`, 'utf8', (err, data) => {
     if (err) return console.log(`ERROR READING JSON: ${data}`)
 
     data = JSON.parse(data)
