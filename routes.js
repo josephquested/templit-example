@@ -28,13 +28,13 @@ function getRobots (req, res) {
 }
 
 function getRobotProfile (req, res) {
+  console.log('GET ROBOT PROFILE REQ: ', req.url)
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
-    data = JSON.parse(data)
-    var robotData = {}
 
-    data.robots.forEach((robot) => {
-      if (robot.id === req.params.id)
-        robotData = robot
+    data = JSON.parse(data)
+    var robotData = data.robots.find((robot) => {
+      if (robot.id == req.params.id) console.log("found a match!", robot)
+      return robot.id == req.params.id
     })
 
     robotData.page = 'ROBOT PROFILE'
