@@ -14,7 +14,10 @@ function render (data) {
     <img class="robo-pic-profile" src="${data.imgURL}" alt="robo-pic">
     <h2>"${data.quote}"</h2>
 
-    <input type="button" onclick="location.href='/robots'" value="back to robots"/><br><br>
+    <form action="/robots/edit/${data.id}" method="get">
+    <input type="submit" value="edit robot">
+    </form>
+
     <form action="/robots/delete/${data.id}" method="post">
       <input type="submit" value="delete robot">
     </form>

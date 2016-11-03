@@ -5,12 +5,14 @@ module.exports = {
     home: getHome,
     robots: getRobots,
     robotProfile: getRobotProfile,
-    robotCreate: getRobotCreate
+    robotCreate: getRobotCreate,
+    robotEdit: getRobotEdit
   },
   post: {
     robots: postRobots,
     robotDelete: postRobotDelete,
-    robotSeed: postRobotSeed
+    robotSeed: postRobotSeed,
+    robotEdit: postRobotEdit
   }
 }
 
@@ -32,7 +34,6 @@ function getRobots (req, res) {
 }
 
 function getRobotProfile (req, res) {
-  console.log('req url:', req.url);
   fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
     if (err) return console.log(`ERROR READING JSON: ${data}`)
     var robotData = {}
@@ -51,6 +52,22 @@ function getRobotProfile (req, res) {
 function getRobotCreate (req, res) {
   var data = { page: 'CREATE ROBOT' }
   res.render('robot-create', data)
+}
+
+function getRobotEdit (req, res) {
+  console.log('ROBOT EDIT!');
+  fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
+    if (err) return console.log(`ERROR READING JSON: ${data}`)
+    var robotData = {}
+
+    data = JSON.parse(data)
+    robotData = data.robots.find((robot) => {
+      return robot.id == req.params.id
+    })
+
+    robotData.page = 'EDIT ROBOT'
+    res.render('robot-edit', robotData)
+  })
 }
 
 // POST ROUTES //
@@ -81,6 +98,26 @@ function postRobotDelete (req, res) {
 
     var index = data.robots.indexOf(robotData)
     data.robots.splice(index, 1)
+
+    fs.writeFile(`${__dirname}/data.JSON`, JSON.stringify(data), (err, response) => {
+      data.page = 'ROBOTS'
+      res.redirect('/robots')
+    })
+  })
+}
+
+function postRobotEdit (req, res) {
+  fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
+    if (err) return console.log(`ERROR READING JSON: ${data}`)
+    data = JSON.parse(data)
+
+    var robotData = data.robots.find((robot) => {
+      return robot.id == req.params.id
+    })
+
+    var index = data.robots.indexOf(robotData)
+    req.body.id = robotData.id
+    data.robots[index] = req.body
 
     fs.writeFile(`${__dirname}/data.JSON`, JSON.stringify(data), (err, response) => {
       data.page = 'ROBOTS'
