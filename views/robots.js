@@ -1,24 +1,3 @@
-module.exports = (data) => {
-  var header = require('./partials/header')(data)
-  var menuBar = require('./partials/menu-bar')()
-
-  var html =
-  `
-    ${header}
-    ${menuBar}
-    ${render(data.robots)}
-  `
-  return html
-}
-
-function render (robots) {
-  if (robots.length > 0) {
-    return renderRobots(robots)
-  } else {
-    return renderSeed()
-  }
-}
-
 function renderRobots (robots) {
   var html = ``
   robots.forEach((robot) => {
@@ -34,7 +13,6 @@ function renderRobots (robots) {
       <br>
     `
   })
-
   return html
 }
 
@@ -46,6 +24,25 @@ function renderSeed () {
       <input type="submit" value="generate!">
     </form>
   `
-
   return html
+}
+
+function render (data) {
+  var header = require('./partials/header')(data)
+  var menuBar = require('./partials/menu-bar')()
+  var html =
+  `
+    ${header}
+    ${menuBar}
+  `
+  if (data.robots.length > 0) {
+    html += renderRobots(data.robots)
+  } else {
+    html += renderSeed()
+  }
+  return html
+}
+
+module.exports = (data) => {
+  return render(data)
 }

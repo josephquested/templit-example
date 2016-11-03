@@ -1,4 +1,4 @@
-module.exports = (data) => {
+function render (data) {
   var header = require('./partials/header')(data)
   var menuBar = require('./partials/menu-bar')()
 
@@ -17,4 +17,8 @@ module.exports = (data) => {
   `
 
   return html
+}
+
+module.exports = (data) => {
+  return render(data)
 }

@@ -22,8 +22,7 @@ function getHome (req, res) {
 }
 
 function getRobots (req, res) {
-  fs.readFile(`${__dirname}/public/data.JSON`, 'utf8', (err, data) => {
-    console.log(`PATH TO RESOURCE: ${__dirname}/public/data.JSON`)
+  fs.readFile(`${__dirname}/data.JSON`, 'utf8', (err, data) => {
     if (err) return console.log(`ERROR READING JSON: ${err}`)
 
     data = JSON.parse(data)
